@@ -31,10 +31,10 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   res.status(500).json({
     message:
-      process.env.Node_ENV === 'dev' ? err.message : 'Something went wrong',
+      process.env.NODE_ENV === 'dev' ? err.message : 'Something went wrong',
   });
 });
 
 app.listen(PORT, () => {
-  console.log('server run!');
+  console.log('PORT:', PORT);
 });
