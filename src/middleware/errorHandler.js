@@ -8,6 +8,8 @@ export const errorHandler = (error, req, res, next) => {
   const isProduction = process.env.NODE_ENV === 'production';
 
   res.status(500).json({
-    error: isProduction ? error.message : error.stack,
+    message: isProduction
+      ? 'Something went wrong. Please try again later.'
+      : error.message,
   });
 };
