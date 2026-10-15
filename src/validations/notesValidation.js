@@ -1,6 +1,6 @@
 import { Segments, Joi } from 'celebrate';
 import { isValidObjectId } from 'mongoose';
-import { TAGS } from '../constants/tags';
+import { TAGS } from '../constants/tags.js';
 
 const validateObjectId = (value, helpers) => {
   if (isValidObjectId(value)) {
@@ -12,30 +12,30 @@ const validateObjectId = (value, helpers) => {
 
 export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object({
-    page: Joi.number().integer().min(1).default('1'),
+    page: Joi.number().integer().min(1).default(1),
     perPage: Joi.number().integer().min(5).max(20).default(10),
-    tag: Joi.string().valid(TAGS),
+    tag: Joi.string().valid(...TAGS),
     search: Joi.string().allow(''),
   }),
 };
 
 export const noteIdSchema = {
   [Segments.PARAMS]: Joi.object({
-    noteId: Joi.string().custom(validateObjectId),
+    noteId: Joi.string().custom(validateObjectId).required(),
   }),
 };
 
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).required,
+    title: Joi.string().min(1).required(),
     content: Joi.string().allow(''),
-    tag: Joi.valid(TAGS),
+    tag: Joi.valid(...TAGS),
   }),
 };
 
 export const updateNoteSchema = {
   [Segments.PARAMS]: Joi.object({
-    noteId: Joi.string().custom(validateObjectId),
+    noteId: Joi.string().custom(validateObjectId).required(),
   }),
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1),
