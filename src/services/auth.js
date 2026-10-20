@@ -1,5 +1,6 @@
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/time.js';
 import { Session } from '../models/session.js';
+import crypto from 'node:crypto';
 
 export const createSession = async (userId) => {
   return Session.create({
@@ -11,7 +12,7 @@ export const createSession = async (userId) => {
   });
 };
 
-export const setSessionCookie = (res, session) => {
+export const setSessionCookies = (res, session) => {
   res.cookie('accessToken', session.accessToken, {
     httpOnly: true,
     secure: true,
